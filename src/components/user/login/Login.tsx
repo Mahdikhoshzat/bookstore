@@ -1,22 +1,21 @@
 import { TextField, Button, Box } from '@mui/material';
 import { Formik, Form } from 'formik';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-
 type UserRole = {
-  role: string;
- }
+    role: string;
+   }
 
-const Registration = (props: UserRole) => {
-  const [roleState, setRoleState] = useState("")
+const Login = (props: UserRole) => {
+    const [roleState, setRoleState] = useState("")
 
-  useEffect(() => {
-      setRoleState(props.role)
-  },[props.role])
+    useEffect(() => {
+        setRoleState(props.role)
+    },[props.role])
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const loginServiceHandler = () => {
         navigate(`/${roleState}/login`)
@@ -25,18 +24,14 @@ const Registration = (props: UserRole) => {
         navigate(`/${roleState}/register`)
     }
 
-  
-  const initialValues = {
-    username: '',
-    password: '',
-    email: '',
-  };
+    const initialValues = {
+        username: '',
+        password: '',
+        };
 
   const validationSchema = Yup.object({
     username: Yup.string().required(`${roleState} name is required`),
     password: Yup.string().required('Password is required'),
-    email: Yup.string().email('Invalid email')
-    .required('Email is required'),
   });
 
   const onSubmit = (values: any) => {
@@ -76,19 +71,6 @@ const Registration = (props: UserRole) => {
                     </Box>
                     <Box sx={{height: "80px"}}>
                     <TextField
-                        name='email'
-                        label='Email'
-                        type='email'
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.email && Boolean(errors.email)}
-                        helperText={touched.email && errors.email}
-                        sx={{width: "300px",height: "75%"}}
-                    />
-                    </Box>
-                    <Box sx={{height: "80px"}}>
-                    <TextField
                         name='password'
                         label='Password'
                         type='password'
@@ -101,7 +83,7 @@ const Registration = (props: UserRole) => {
                     />
                     </Box>
                     <Button type='submit' variant='contained' color='primary' sx={{width: "50%",mb: "2rem"}}>
-                        Sign Up
+                        Sign In
                     </Button>
                     </Box>
                 </Box>
@@ -112,4 +94,4 @@ const Registration = (props: UserRole) => {
   );
 };
 
-export default Registration
+export default Login
