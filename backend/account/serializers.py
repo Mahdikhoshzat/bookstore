@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from backend.account.models import User
-from backend.utils.exception import DuplicateUsernameException, DuplicateEmailException
+from account.models import User
+from utils.exception import DuplicateUsernameException, DuplicateEmailException
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -17,6 +17,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(email=validated_data['email'], username=validated_data['username'])
         user.set_password(validated_data['password'])
+        user.save()
 
         return user
 
