@@ -15,7 +15,7 @@ class SignUpView(APIView):
     @swagger_auto_schema(
         request_body=SignUpSerializer(),
         responses={
-            status.HTTP_200_OK: openapi.Response(schema=SignUpSerializer(), description=''),
+            status.HTTP_201_CREATED: 'عملیات با موفقیت انجام شد.',
             status.HTTP_400_BAD_REQUEST: 'Bad Request',
             status.HTTP_404_NOT_FOUND: 'Not Found',
         },
@@ -30,7 +30,7 @@ class SignUpView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         serializer.save()
-        return Response(data={'message': 'عملیات با موفقیت انجام شد.'}, status=status.HTTP_201_CREATED)
+        return Response(data='عملیات با موفقیت انجام شد.', status=status.HTTP_201_CREATED)
 
 
 class LoginView(APIView):
@@ -51,14 +51,9 @@ class LoginView(APIView):
         operation_summary='Login'
     )
     def post(self, request: Request):
-        data = request.data
-        username = data.get('username')
-        password = data.get('password')
+        serializer = LoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(data={'message': 'نام کاربری یا کلمه عبور اشتباه است.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if user := User.objects.filter(username=username).first():
-            if user.check_password(password):
-                refresh = RefreshToken.for_user(user)
-
-                return Response(data={'refresh': str(refresh), 'access': str(refresh.access_token)})
-
-        return Response(data={'message': 'نام کاربری یا کلمه عبور اشتباه است.'}, status=status.HTTP_400_BAD_REQUEST)
+        refresh = RefreshToken.for_user(serializer.validated_data['user'])
+        return Response(data={'refresh': str(refresh), 'access': str(refresh.access_token)})

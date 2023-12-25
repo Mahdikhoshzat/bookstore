@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from account.models import User
+from bookstore.exceptions import UserNotFoundException
 from utils.exception import DuplicateUsernameException, DuplicateEmailException
 
 
@@ -27,6 +28,13 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        if user := User.objects.filter(username=attrs['username']).first():
+            if user.check_password(attrs['password']):
+                attrs['user'] = user
+                return attrs
+        raise UserNotFoundException
+
     class Meta:
         model = User
         fields = ['username', 'password']
