@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _
 class Publisher(models.Model):
     name = models.CharField(max_length=200, verbose_name=_('name'))
     slug = models.SlugField(max_length=200, unique=True, verbose_name=_('slug'))
-    admin = models.ForeignKey('PublisherUser', on_delete=models.CASCADE, verbose_name=_('admin'))
+    admin = models.ForeignKey('PublisherUser', on_delete=models.CASCADE, verbose_name=_('admin'),
+                              related_name='publisher_admin', null=True)
 
     class Meta:
         verbose_name = _('publisher')
