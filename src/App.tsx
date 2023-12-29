@@ -9,7 +9,7 @@ import BookDetails from './components/book/BookDetails';
 
 function App() {
   return (
-    <div className="App" style={{height: "100vh",width: "100vw"}}>
+    <div className="App" style={{height: "100vh",width: "100%"}}>
       <Routes>
         <Route path= "/" element={<Main />} />
         <Route path= "/books" element={<BookList />} />

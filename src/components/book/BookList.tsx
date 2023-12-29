@@ -3,6 +3,7 @@ import axios from "axios";
 import BookItem from "./BookItem";
 import AxiosInstance from "../../custom/axios/axiosInstance";
 import MyFakeData from "./myFakeData.json"
+import { Box, Grid } from "@mui/material";
 
 const ContactList = () => {
   const [books, setBooks] = useState([]);
@@ -55,33 +56,27 @@ const ContactList = () => {
   }, [books]);
 
   return (
-    <div>
+    <Box sx={{m:"2rem"}}>
       <h2>Book List</h2>
-      <div>
       <h3>Best seller</h3>
-      <ul>
-        {bestSell?.map((book:any) => (
-          <BookItem key={book?.id} book={book} />
-        ))}
-      </ul>
-      </div>
-      <div>
-      <h3>History</h3>
-      <ul>
-        {history?.map((book:any) => (
-          <BookItem key={book?.id} book={book} />
-        ))}
-      </ul>
-      </div>
-      <div>
-      <h3>Classic</h3>
-      <ul>
-        {classic?.map((book:any) => (
-          <BookItem key={book?.id} book={book} />
-        ))}
-      </ul>
-      </div>
-    </div>
+      <Grid container spacing={3} >
+   {bestSell.map((book:any, index) => (
+     <BookItem key={book?.id} book={book} index={index} />
+   ))}
+ </Grid>
+ <h3>History</h3>
+ <Grid container spacing={2}>
+   {history.map((book:any, index) => (
+     <BookItem key={book?.id} book={book} index={index} />
+   ))}
+ </Grid>
+ <h3>Classic</h3>
+ <Grid container spacing={2}>
+   {classic.map((book:any, index) => (
+    <BookItem key={book?.id} book={book} index={index} />
+   ))}
+ </Grid>
+    </Box>
   );
 };
 
