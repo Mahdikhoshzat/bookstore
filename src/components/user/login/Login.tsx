@@ -23,6 +23,9 @@ const Login = (props: UserRole) => {
     const registerServiceHandler = () => {
         navigate(`/${roleState}/register`)
     }
+    const shopHandler = () => {
+      navigate("/books")
+    }
 
     const initialValues = {
         username: '',
@@ -36,6 +39,7 @@ const Login = (props: UserRole) => {
 
   const onSubmit = (values: any) => {
     console.log(values)
+    shopHandler()
   };
 
   return (

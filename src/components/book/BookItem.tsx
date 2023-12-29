@@ -7,12 +7,12 @@ type Book = {
 
 const BookItem = (props : Book) => {
 
-  
+  {console.log("hello")}
 
   return (
     <li >
-      <Link to={{ pathname: `/${props.book.id}`}}>
-        {props.book.first_name} {props.book.last_name} - {props.book.photo}
+      <Link to={{ pathname: `/books/${props.book.id}`}}>
+        {props.book.name} {props.book.summary} - {props.book.category}
       </Link>
     </li>
   );

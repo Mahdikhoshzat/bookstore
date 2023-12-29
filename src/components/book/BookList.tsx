@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BookItem from "./BookItem";
 import AxiosInstance from "../../custom/axios/axiosInstance";
+import MyFakeData from "./myFakeData.json"
 
 const ContactList = () => {
   const [books, setBooks] = useState([]);
@@ -13,12 +14,23 @@ const ContactList = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await AxiosInstance.get("/books");
-        const fetchedBooks = response?.data
-        setBooks(fetchedBooks)
-        let bestSellArr: any
-        let historyArr: any
-        let classicArr: any
+        // const response = await AxiosInstance.get("/books");
+        // const fetchedBooks = response?.data
+        // setBooks(fetchedBooks)
+        //@ts-ignore
+        setBooks(MyFakeData)
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let bestSellArr: any[] = []
+        let historyArr: any[] = []
+        let classicArr: any[] = []
         books.forEach((element:any) => {
           if(element.category === 'bestSell'){
             bestSellArr.push(element)
@@ -29,15 +41,18 @@ const ContactList = () => {
           else if(element.category === 'classic'){
             classicArr.push(element)
           }
-        });
+        }); 
+        //@ts-ignore
         setBestSell(bestSellArr)
+        //@ts-ignore
         setHistory(historyArr)
+        //@ts-ignore
         setClassic(classicArr)
       } catch (error) {
         console.error("Error fetching books:", error);
       }
     })();
-  }, []);
+  }, [books]);
 
   return (
     <div>
