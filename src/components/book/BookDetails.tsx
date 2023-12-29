@@ -32,6 +32,7 @@ const BookDetails = () => {
             Name: {book.name} {book.summary}
           </p>
           <p>Phone: {book.photo}</p>
+          <p>Category: {book.category}</p>
         </div>
       ) : (
         <p>Loading...</p>
